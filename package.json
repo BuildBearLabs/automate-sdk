@@ -1,6 +1,6 @@
 {
   "name": "buildbear-automate-sdk",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Gelato SDK to create Automate tasks",
   "url": "https://github.com/gelatodigital/automate-sdk",
   "main": "dist/index.js",
