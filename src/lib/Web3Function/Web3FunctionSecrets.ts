@@ -13,13 +13,14 @@ export class Web3FunctionSecrets {
   constructor(signer: Signer, signature: Signature, config?: Partial<Config>) {
     this._signer = signer;
 
-    const userApiUrl: string = "https://api.dev.buildbear.io/v1/gelato";
+    const userApiUrl: string = "https://api.buildbear.io/v1/gelato";
 
     this._userApi = axios.create({
       baseURL: userApiUrl,
     });
 
     this._signature = signature;
+    console.log(config);
   }
 
   public async get(

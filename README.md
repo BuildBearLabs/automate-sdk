@@ -9,13 +9,13 @@ Automate your smart contracts using Automate SDK
 ## Installation
 
 ```bash
-yarn add @gelatonetwork/automate-sdk
+yarn add buildbear-automate-sdk@3.0.3
 ```
 
 or
 
 ```bash
-npm install @gelatonetwork/automate-sdk
+npm install buildbear-automate-sdk@3.0.3
 ```
 
 ## How to use?
