@@ -1,4 +1,4 @@
-# Gelato Automate SDK <!-- omit in toc -->
+# Buildbear modified - Gelato Automate SDK <!-- omit in toc -->
 
 Automate your smart contracts using Automate SDK
 

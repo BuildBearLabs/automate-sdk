@@ -1,6 +1,5 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import axios, { Axios } from "axios";
-import { AUTOMATE_USER_API, AUTOMATE_USER_DEV_API } from "../../constants";
 import { Config, Secrets } from "../../types";
 import { errorMessage } from "../../utils";
 import { Signature } from "../Signature";
@@ -14,13 +13,8 @@ export class Web3FunctionSecrets {
   constructor(signer: Signer, signature: Signature, config?: Partial<Config>) {
     this._signer = signer;
 
-    let userApiUrl: string = AUTOMATE_USER_API;
-    if (config) {
-      userApiUrl =
-        config.userApi ?? config.isDevelopment
-          ? AUTOMATE_USER_DEV_API
-          : AUTOMATE_USER_API;
-    }
+    const userApiUrl: string = "https://api.dev.buildbear.io/v1/gelato";
+
     this._userApi = axios.create({
       baseURL: userApiUrl,
     });
@@ -43,9 +37,7 @@ export class Web3FunctionSecrets {
         ? `/users/${address}/secrets/${key}/${this._chainId}/${taskId}`
         : `/users/${address}/secrets/${key}`;
 
-      const res = await this._userApi.get(route, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+      const res = await this._userApi.get(route);
 
       const secret = res.data[key];
 
@@ -67,9 +59,7 @@ export class Web3FunctionSecrets {
         ? `/users/${address}/secrets/${this._chainId}/${taskId}`
         : `/users/${address}/secrets`;
 
-      const res = await this._userApi.get(route, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+      const res = await this._userApi.get(route);
 
       return res.data as Secrets;
     } catch (err) {
@@ -93,13 +83,7 @@ export class Web3FunctionSecrets {
         ? `/users/${address}/secrets/${this._chainId}/${taskId}`
         : `/users/${address}/secrets`;
 
-      await this._userApi.post(
-        route,
-        { ...secrets },
-        {
-          headers: { Authorization: `Bearer ${authToken}` },
-        },
-      );
+      await this._userApi.post(route, { ...secrets });
     } catch (err) {
       const errMsg = errorMessage(err);
       throw new Error(`Fail to set secrets ${secrets}. \n${errMsg}`);
@@ -121,9 +105,7 @@ export class Web3FunctionSecrets {
         ? `/users/${address}/secrets/${key}/${this._chainId}/${taskId}`
         : `/users/${address}/secrets/${key}`;
 
-      await this._userApi.delete(route, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+      await this._userApi.delete(route);
     } catch (err) {
       const errMsg = errorMessage(err);
       throw new Error(`Fail to delete secret "${key}". \n${errMsg}`);
